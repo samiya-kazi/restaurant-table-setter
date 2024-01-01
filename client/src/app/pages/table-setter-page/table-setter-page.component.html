@@ -6,7 +6,7 @@
     <button nz-button class="add-table-button" (click)="addNewTable('circle')">Circle</button>
     <button nz-button class="add-table-button" (click)="addNewTable('oval')">Oval</button>
     <div class="restaurant-floor">
-      @for (table of tables; track $index) {
+      @for (table of tables; track table) {
         <div
           class="table" 
           cdkDragBoundary=".restaurant-floor" 
@@ -14,8 +14,13 @@
           (cdkDragEnded)="handleDragEnd($event)"
           [cdkDragData]="table"
           [cdkDragFreeDragPosition]="table.position"
-        >{{table.name}}</div>
+          (click)="setSelectedTable(table)"
+          (cdkDragStarted)="setSelectedTable(table)"
+        >
+          <app-table [table]="table"></app-table>
+        </div>
       }
     </div>
   </div>
+  <app-table-details [selectedTable]="selectedTable" (removeTableEvent)="removeTable($event)" (deselectTableEvent)="setSelectedTable(null)"></app-table-details>
 </div>

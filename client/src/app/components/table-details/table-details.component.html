@@ -1,0 +1,48 @@
+@if (selectedTable) {
+<form nz-form>
+  <h3>Table Details</h3>
+  <nz-form-item>
+    <nz-form-label nzFor="name">Table name</nz-form-label>
+    <nz-form-control>
+      <input
+        nz-input
+        name="name"
+        type="text"
+        id="name"
+        [(ngModel)]="selectedTable.name"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-row class="full">
+      <nz-form-label nzFor="seats">Seats</nz-form-label>
+      <nz-col nzSpan="12">
+        <nz-slider
+          name="seats-slider"
+          id="seats"
+          [nzMin]="2"
+          [nzMax]="8"
+          [(ngModel)]="selectedTable.seats"
+        ></nz-slider>
+      </nz-col>
+      <div nz-col nzSpan="2">
+        <nz-input-number
+          [nzMin]="2"
+          [nzMax]="8"
+          [(ngModel)]="selectedTable.seats"
+          name="seats"
+          id="seats-input"
+        ></nz-input-number>
+      </div>
+    </nz-row>
+  </nz-form-item>
+
+  <button type="button" [nzGhost]="true" nzType="primary" nz-button (click)="deselectTable()">
+    <span nz-icon nzType="close-circle" nzTheme="outline"></span>Close
+  </button>
+  <button type="button" [nzDanger]="true" nzType="primary" nz-button (click)="removeTable()">
+    <span nz-icon nzType="delete"></span> Remove
+  </button>
+</form>
+}
