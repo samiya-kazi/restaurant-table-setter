@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="editor">
+    Add table: 
+    <button nz-button class="add-table-button" (click)="addNewTable('square')">Square</button>
+    <button nz-button class="add-table-button" (click)="addNewTable('rectangle')">Rectangle</button>
+    <button nz-button class="add-table-button" (click)="addNewTable('circle')">Circle</button>
+    <button nz-button class="add-table-button" (click)="addNewTable('oval')">Oval</button>
+    <div class="restaurant-floor">
+      @for (table of tables; track $index) {
+        <div
+          class="table" 
+          cdkDragBoundary=".restaurant-floor" 
+          cdkDrag
+          (cdkDragEnded)="handleDragEnd($event)"
+          [cdkDragData]="table"
+          [cdkDragFreeDragPosition]="table.position"
+        >{{table.name}}</div>
+      }
+    </div>
+  </div>
+</div>
