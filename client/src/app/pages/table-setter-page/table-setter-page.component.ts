@@ -21,7 +21,7 @@ export class TableSetterPageComponent {
       id: Date.now().toString(),
       name: this.getNextTableName(),
       type,
-      seats: 2,
+      seats: 4,
       position: {
         x: 50,
         y: 50

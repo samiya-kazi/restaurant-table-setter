@@ -1,3 +1,15 @@
 .full {
   width: 100%;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+}
