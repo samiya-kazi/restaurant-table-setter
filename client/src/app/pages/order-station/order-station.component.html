@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="restaurant-floor">
+    <ko-stage [config]="configStage" >
+      <ko-layer>
+        @for (table of tables; track $index) {
+          <ko-image [config]="table.config" ></ko-image>
+        }
+      </ko-layer>
+    </ko-stage>
+  </div>
+  
+</div>

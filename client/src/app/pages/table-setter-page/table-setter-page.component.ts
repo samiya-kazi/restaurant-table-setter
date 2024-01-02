@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ITable } from '../../models/table.model';
 import { TableDetailsComponent } from '../../components/table-details/table-details.component';
@@ -13,9 +13,22 @@ import { ImageConfig } from 'konva/lib/shapes/Image';
   templateUrl: './table-setter-page.component.html',
   styleUrl: './table-setter-page.component.css'
 })
-export class TableSetterPageComponent {
+export class TableSetterPageComponent implements OnInit{
+  
   tables : {info: ITable, config: Partial<ImageConfig>}[] = [];
   selectedTable : {info: ITable, config: Partial<ImageConfig>} | null = null;
+  
+  ngOnInit(): void {
+    const data = localStorage.getItem('tables');
+    if (data) {
+      const parsedData = JSON.parse(data);
+      const restructuredData = parsedData.map((item: {info: ITable, config: Partial<ImageConfig>}) => {
+        return {...item, config: {...item.config, draggable: true, image: this.getImage(item.info.type, item.info.seats)}}
+      })
+
+      this.tables = restructuredData;
+    }
+  }
 
   public configStage: Partial<StageConfig> = {
     width: 1000,
@@ -109,5 +122,9 @@ export class TableSetterPageComponent {
     if (data.event && data.event.target.attrs.container) {
       this.selectedTable = null;
     }
+  }
+
+  saveTables () {
+    localStorage.setItem('tables', JSON.stringify(this.tables));
   }
 }

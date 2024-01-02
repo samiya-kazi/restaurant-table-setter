@@ -5,6 +5,7 @@
     <button nz-button class="add-table-button" (click)="addNewTable('rectangle')">Rectangle</button>
     <button nz-button class="add-table-button" (click)="addNewTable('circle')">Circle</button>
     <button nz-button class="add-table-button" (click)="addNewTable('oval')">Oval</button>
+    <button nz-button nzType="primary" (click)="saveTables()">Save</button>
     <div class="restaurant-floor">
       <ko-stage [config]="configStage" (click)="handleStageClick($event)">
         <ko-layer>
@@ -15,7 +16,6 @@
               (dragend)="handleDragEnd($event)"
               (click)="setSelectedTable(table)"
             ></ko-image>
-            <ko-text [config]="{}"></ko-text>
           }
         </ko-layer>
       </ko-stage>
