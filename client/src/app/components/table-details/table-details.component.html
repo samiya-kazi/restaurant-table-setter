@@ -21,17 +21,17 @@
         <nz-slider
           name="seats-slider"
           id="seats"
-          [nzMin]="getMinSeats()"
-          [nzMax]="getMaxSeats()"
+          [nzMin]="getSeatData().min"
+          [nzMax]="getSeatData().max"
           [(ngModel)]="selectedTable.info.seats"
           (ngModelChange)="updateTable(selectedTable.info)"
-          [nzStep]="2"
+          [nzStep]="getSeatData().step"
         ></nz-slider>
       </nz-col>
       <div nz-col nzSpan="2">
         <nz-input-number
-          [nzMin]="getMinSeats()"
-          [nzMax]="getMaxSeats()"
+          [nzMin]="getSeatData().min"
+          [nzMax]="getSeatData().max"
           [(ngModel)]="selectedTable.info.seats"
           (ngModelChange)="updateTable(selectedTable.info)"
           name="seats"

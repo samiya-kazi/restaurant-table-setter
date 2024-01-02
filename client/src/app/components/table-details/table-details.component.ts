@@ -43,48 +43,18 @@ export class TableDetailsComponent {
     }
   }
 
-  getMinSeats() {
+  getSeatData () {
     switch (this.selectedTable && this.selectedTable.info.type) {
       case 'square':
-        return 2;
+        return { min: 2, max: 4, step: 1 };
       case 'circle':
-        return 2;
+        return { min: 2, max: 4, step: 1 };
       case 'rectangle':
-        return 4;
+        return { min: 4, max: 8, step: 2 };
       case 'oval':
-        return 4;
+        return { min: 4, max: 8, step: 2 };
       default:
-        return 2;
-    }
-  }
-
-  getMaxSeats() {
-    switch (this.selectedTable && this.selectedTable.info.type) {
-      case 'square':
-        return 4;
-      case 'circle':
-        return 4;
-      case 'rectangle':
-        return 8;
-      case 'oval':
-        return 8;
-      default:
-        return 4;
-    }
-  }
-
-  getStepSize () {
-    switch (this.selectedTable && this.selectedTable.info.type) {
-      case 'square':
-        return 1;
-      case 'circle':
-        return 1;
-      case 'rectangle':
-        return 2;
-      case 'oval':
-        return 2;
-      default:
-        return 1;
+        return { min: 2, max: 4, step: 1 };
     }
   }
 

@@ -104,4 +104,10 @@ export class TableSetterPageComponent {
       } else return item;
     })
   }
+
+  handleStageClick(data: NgKonvaEventObject<MouseEvent>) {
+    if (data.event && data.event.target.attrs.container) {
+      this.selectedTable = null;
+    }
+  }
 }
