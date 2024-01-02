@@ -3,17 +3,20 @@ import { ITable } from '../../models/table.model';
 import { ImageConfig } from 'konva/lib/shapes/Image';
 import { StageConfig } from 'konva/lib/Stage';
 import { CoreShapeComponent, StageComponent } from 'ng2-konva';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-order-station',
   standalone: true,
-  imports: [StageComponent, CoreShapeComponent],
+  imports: [StageComponent, CoreShapeComponent, NzButtonComponent, NzIconModule],
   templateUrl: './order-station.component.html',
   styleUrl: './order-station.component.css'
 })
 export class OrderStationComponent implements OnInit {
 
   tables : {info: ITable, config: Partial<ImageConfig>}[] = [];
+  selectedTable : ITable | null = null;
 
   ngOnInit(): void {
     const data = localStorage.getItem('tables');
@@ -36,6 +39,10 @@ export class OrderStationComponent implements OnInit {
     const image = new window.Image();
     image.src = '../../../assets/svg/' + type + '-' + seats + '.svg';
     return image;
+  }
+
+  setSelectedTable (table: ITable | null) {
+    this.selectedTable = table;
   }
 
 }
