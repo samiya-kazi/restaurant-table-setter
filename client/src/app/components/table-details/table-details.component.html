@@ -9,7 +9,7 @@
         name="name"
         type="text"
         id="name"
-        [(ngModel)]="selectedTable.name"
+        [(ngModel)]="selectedTable.info.name"
       />
     </nz-form-control>
   </nz-form-item>
@@ -23,20 +23,42 @@
           id="seats"
           [nzMin]="getMinSeats()"
           [nzMax]="getMaxSeats()"
-          [(ngModel)]="selectedTable.seats"
+          [(ngModel)]="selectedTable.info.seats"
+          (ngModelChange)="updateTable(selectedTable.info)"
+          [nzStep]="2"
         ></nz-slider>
       </nz-col>
       <div nz-col nzSpan="2">
         <nz-input-number
           [nzMin]="getMinSeats()"
           [nzMax]="getMaxSeats()"
-          [(ngModel)]="selectedTable.seats"
+          [(ngModel)]="selectedTable.info.seats"
+          (ngModelChange)="updateTable(selectedTable.info)"
           name="seats"
           id="seats-input"
         ></nz-input-number>
       </div>
     </nz-row>
   </nz-form-item>
+
+  <div class="full rotate-container">
+    <p>Rotate: </p>
+    <button
+      type="button"
+      nz-button
+      (click)="rotateTable('clockwise')"
+    >
+      <span nz-icon nzType="rotate-right" nzTheme="outline"></span>
+    </button>
+
+    <button
+    type="button"
+    nz-button
+    (click)="rotateTable('anti-clockwise')"
+  >
+    <span nz-icon nzType="rotate-left" nzTheme="outline"></span>
+  </button>
+  </div>
 
   <div class="full button-container">
     <button

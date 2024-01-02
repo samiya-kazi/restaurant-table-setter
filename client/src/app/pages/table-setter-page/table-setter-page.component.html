@@ -6,21 +6,24 @@
     <button nz-button class="add-table-button" (click)="addNewTable('circle')">Circle</button>
     <button nz-button class="add-table-button" (click)="addNewTable('oval')">Oval</button>
     <div class="restaurant-floor">
-      @for (table of tables; track table) {
-        <div
-          class="table" 
-          cdkDragBoundary=".restaurant-floor" 
-          cdkDrag
-          (cdkDragEnded)="handleDragEnd($event)"
-          [cdkDragData]="table"
-          [cdkDragFreeDragPosition]="table.position"
-          (click)="setSelectedTable(table)"
-          (cdkDragStarted)="setSelectedTable(table)"
-        >
-          <app-table [table]="table"></app-table>
-        </div>
-      }
+      <ko-stage [config]="configStage">
+        <ko-layer>
+          @for (table of tables; track $index) {
+            <ko-image 
+              [config]="table.config"
+              (dragstart)="setSelectedTable(table)"
+              (dragend)="handleDragEnd($event)"
+              (click)="setSelectedTable(table)"
+            ></ko-image>
+          }
+        </ko-layer>
+      </ko-stage>
     </div>
   </div>
-  <app-table-details [selectedTable]="selectedTable" (removeTableEvent)="removeTable($event)" (deselectTableEvent)="setSelectedTable(null)"></app-table-details>
+  <app-table-details 
+    [selectedTable]="selectedTable" 
+    (removeTableEvent)="removeTable($event)" 
+    (deselectTableEvent)="setSelectedTable(null)"
+    (updateTableEvent)="updateTable($event)"
+  ></app-table-details>
 </div>

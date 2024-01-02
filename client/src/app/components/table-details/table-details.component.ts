@@ -7,6 +7,7 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { FormsModule } from '@angular/forms';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { ImageConfig } from 'konva/lib/shapes/Image';
 
 @Component({
   selector: 'app-table-details',
@@ -24,14 +25,15 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   styleUrl: './table-details.component.css',
 })
 export class TableDetailsComponent {
-  @Input() selectedTable!: ITable | null;
+  @Input() selectedTable!: {info: ITable, config: Partial<ImageConfig>} | null;
 
   @Output() removeTableEvent = new EventEmitter<ITable>();
   @Output() deselectTableEvent = new EventEmitter();
+  @Output() updateTableEvent = new EventEmitter<ITable>();
 
   removeTable() {
     if (this.selectedTable) {
-      this.removeTableEvent.emit(this.selectedTable);
+      this.removeTableEvent.emit(this.selectedTable.info);
     }
   }
 
@@ -42,7 +44,7 @@ export class TableDetailsComponent {
   }
 
   getMinSeats() {
-    switch (this.selectedTable && this.selectedTable.type) {
+    switch (this.selectedTable && this.selectedTable.info.type) {
       case 'square':
         return 2;
       case 'circle':
@@ -57,7 +59,7 @@ export class TableDetailsComponent {
   }
 
   getMaxSeats() {
-    switch (this.selectedTable && this.selectedTable.type) {
+    switch (this.selectedTable && this.selectedTable.info.type) {
       case 'square':
         return 4;
       case 'circle':
@@ -69,5 +71,39 @@ export class TableDetailsComponent {
       default:
         return 4;
     }
+  }
+
+  getStepSize () {
+    switch (this.selectedTable && this.selectedTable.info.type) {
+      case 'square':
+        return 1;
+      case 'circle':
+        return 1;
+      case 'rectangle':
+        return 2;
+      case 'oval':
+        return 2;
+      default:
+        return 1;
+    }
+  }
+
+  rotateTable (direction: 'clockwise' | 'anti-clockwise') {
+    if (this.selectedTable) {
+      const current = this.selectedTable.info.position.rotation ?? 0;
+      let newRotation : number;
+
+      if (direction === 'clockwise') 
+        newRotation = (current + 45) >= 360 ? 0 : (current + 45);
+      else
+        newRotation = (current - 45) < 0 ? 315 : (current - 45);
+
+      this.selectedTable.info.position.rotation = newRotation;
+      this.updateTable(this.selectedTable.info);
+    }
+  }
+
+  updateTable (table: ITable) {
+    this.updateTableEvent.emit(table);
   }
 }

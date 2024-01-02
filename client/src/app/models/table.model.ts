@@ -5,6 +5,7 @@ export interface ITable {
   seats: number,
   position: {
     x: number,
-    y: number
+    y: number,
+    rotation? : number
   }
 }
