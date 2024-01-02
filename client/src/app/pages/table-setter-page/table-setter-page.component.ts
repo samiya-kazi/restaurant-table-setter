@@ -5,11 +5,13 @@ import { TableDetailsComponent } from '../../components/table-details/table-deta
 import { CoreShapeComponent, NgKonvaEventObject, StageComponent } from 'ng2-konva';
 import { StageConfig } from 'konva/lib/Stage';
 import { ImageConfig } from 'konva/lib/shapes/Image';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-table-setter-page',
   standalone: true,
-  imports: [NzButtonModule, TableDetailsComponent, StageComponent, CoreShapeComponent],
+  imports: [NzButtonModule, NzIconModule, TableDetailsComponent, StageComponent, CoreShapeComponent],
   templateUrl: './table-setter-page.component.html',
   styleUrl: './table-setter-page.component.css'
 })
@@ -17,6 +19,8 @@ export class TableSetterPageComponent implements OnInit{
   
   tables : {info: ITable, config: Partial<ImageConfig>}[] = [];
   selectedTable : {info: ITable, config: Partial<ImageConfig>} | null = null;
+
+  constructor (private toastMessage: NzMessageService) {}
   
   ngOnInit(): void {
     const data = localStorage.getItem('tables');
@@ -79,7 +83,7 @@ export class TableSetterPageComponent implements OnInit{
   }
 
 
-  handleDragEnd (konvaEvent: NgKonvaEventObject<MouseEvent>) {
+  handleDrag (konvaEvent: NgKonvaEventObject<MouseEvent>) {
     const tableId = konvaEvent.event.target.name();
     const x = konvaEvent.event.target.x();
     const y = konvaEvent.event.target.y();
@@ -92,6 +96,12 @@ export class TableSetterPageComponent implements OnInit{
 
   setSelectedTable (table: {info: ITable, config: Partial<ImageConfig>} | null) {
     this.selectedTable = table;
+  }
+
+  getConfig (table: {info: ITable, config: Partial<ImageConfig>}) {
+    if (this.selectedTable && this.selectedTable.info.id === table.info.id)
+      return {...table.config, stroke: 'grey', strokeWidth: 1};
+    else return table.config;
   }
 
   removeTable (table: ITable) {
@@ -126,5 +136,6 @@ export class TableSetterPageComponent implements OnInit{
 
   saveTables () {
     localStorage.setItem('tables', JSON.stringify(this.tables));
+    this.toastMessage.success('Saved table layout successfully.');
   }
 }
